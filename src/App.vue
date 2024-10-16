@@ -15,9 +15,7 @@ const mapRef = ref<HTMLDivElement>()
 onMounted(async () => {
     if (mapRef.value) {
         const canvaskit = await initCanvaskit({
-            locateFile() {
-                return "https://cdn.staticfile.org/canvaskit-wasm/0.39.1/canvaskit.wasm";
-            },
+            locateFile: (file) => 'https://unpkg.com/canvaskit-wasm@latest/bin/' + file
         });
 
         const map = new CanvaskitMap(canvaskit, {
@@ -43,8 +41,8 @@ onMounted(async () => {
         // 添加一个marker点
         // 创建 CanvasImageSource 
         let canvas = document.createElement('canvas')
-        canvas.width = 50
-        canvas.height = 50
+        canvas.width = 10
+        canvas.height = 10
         // 创建红色背景
         let ctx = canvas.getContext('2d')
         if (ctx) {
@@ -65,6 +63,9 @@ onMounted(async () => {
 </script>
 <template>
     <div class="App">
+        <div class="header">
+            <h1>标题</h1>
+        </div>
         <div class="map" ref="mapRef"></div>
     </div>
 </template>
@@ -89,6 +90,6 @@ export default {
 
 .map {
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 50px);
 }
 </style>
